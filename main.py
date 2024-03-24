@@ -36,6 +36,12 @@ def translate_role_for_streamlit(user_role):
     else:
         return user_role
 
+# Function to style the page with CSS
+def local_css(file_name):
+    with open(file_name) as f:
+        st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+        
+
 if selected == "ChatBot": 
     if "chat_session" not in st.session_state:
         st.session_state.chat_session = model.start_chat(history=[])
@@ -53,8 +59,6 @@ if selected == "ChatBot":
 
         with st.chat_message("assistant"):
             st.markdown(gemini_response.text)
-
-
 
 
 if selected == "file uploader":
