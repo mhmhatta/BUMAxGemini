@@ -36,11 +36,81 @@ def translate_role_for_streamlit(user_role):
     else:
         return user_role
 
-# Function to style the page with CSS
-def local_css(file_name):
-    with open(file_name) as f:
-        st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
-        
+# Function to apply CSS styles directly
+def apply_custom_styles():
+    custom_css = """
+    /* Customize sidebar */
+    [data-testid="stSidebar"][role="complementary"] {
+        background-color: #f0f0f0;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    /* Center content */
+    [data-testid="stVerticalBlock"][role="main"] {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    /* Chat messages styling */
+    [data-baseweb="toast"] {
+        max-width: 70%;
+        background-color: #f0f0f0;
+        margin: 10px;
+        border-radius: 5px;
+    }
+
+    [data-baseweb="toastBody"] {
+        padding: 10px;
+    }
+
+    /* Chat input box */
+    [data-testid="stTextInput"] {
+        border-radius: 20px;
+        padding: 10px 20px;
+        font-size: 16px;
+    }
+
+    /* ChatBot title */
+    [data-testid="stText"][class*="css-"][class*="title"] {
+        font-size: 32px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    /* Button styling */
+    [data-testid="stButton"] {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 20px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    [data-testid="stButton"]:hover {
+        background-color: #0056b3;
+    }
+
+    /* File uploader */
+    [data-testid="stFileUploader"][role="button"] {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 20px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    [data-testid="stFileUploader"][role="button"]:hover {
+        background-color: #0056b3;
+    }
+    """
+
+    st.markdown(f'<style>{custom_css}</style>', unsafe_allow_html=True)
+
 
 if selected == "ChatBot": 
     if "chat_session" not in st.session_state:
