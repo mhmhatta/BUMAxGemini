@@ -21,6 +21,9 @@ st.set_page_config(
     layout="centered"
 )
 
+with open("design.css") as source_des: 
+    st.markdown(f"<style>{source_des.read()}</style>", unsafe_allow_html=True)
+
 with st.sidebar: 
     selected = option_menu(menu_title="Gemini AI",
                            options=["ChatBot",
@@ -29,6 +32,7 @@ with st.sidebar:
                             menu_icon='robot', icons=['chat-dots-fill'],
                             default_index=0
                            )
+
     
 def translate_role_for_streamlit(user_role):
     if user_role == "model":
@@ -36,80 +40,6 @@ def translate_role_for_streamlit(user_role):
     else:
         return user_role
 
-# Function to apply CSS styles directly
-def apply_custom_styles():
-    custom_css = """
-    /* Customize sidebar */
-    [data-testid="stSidebar"][role="complementary"] {
-        background-color: #f0f0f0;
-        padding: 20px;
-        border-radius: 10px;
-    }
-
-    /* Center content */
-    [data-testid="stVerticalBlock"][role="main"] {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-    }
-
-    /* Chat messages styling */
-    [data-baseweb="toast"] {
-        max-width: 70%;
-        background-color: #f0f0f0;
-        margin: 10px;
-        border-radius: 5px;
-    }
-
-    [data-baseweb="toastBody"] {
-        padding: 10px;
-    }
-
-    /* Chat input box */
-    [data-testid="stTextInput"] {
-        border-radius: 20px;
-        padding: 10px 20px;
-        font-size: 16px;
-    }
-
-    /* ChatBot title */
-    [data-testid="stText"][class*="css-"][class*="title"] {
-        font-size: 32px;
-        font-weight: bold;
-        margin-bottom: 20px;
-    }
-
-    /* Button styling */
-    [data-testid="stButton"] {
-        background-color: #007bff;
-        color: white;
-        padding: 10px 20px;
-        border-radius: 20px;
-        font-size: 16px;
-        cursor: pointer;
-    }
-
-    [data-testid="stButton"]:hover {
-        background-color: #0056b3;
-    }
-
-    /* File uploader */
-    [data-testid="stFileUploader"][role="button"] {
-        background-color: #007bff;
-        color: white;
-        padding: 10px 20px;
-        border-radius: 20px;
-        font-size: 16px;
-        cursor: pointer;
-    }
-
-    [data-testid="stFileUploader"][role="button"]:hover {
-        background-color: #0056b3;
-    }
-    """
-
-    st.markdown(f'<style>{custom_css}</style>', unsafe_allow_html=True)
 
 
 if selected == "ChatBot": 
@@ -117,6 +47,10 @@ if selected == "ChatBot":
         st.session_state.chat_session = model.start_chat(history=[])
     
     st.title("🤖 Gemini - ChatBot 🤖")
+
+    if st.button("Clear Chat History"):
+        st.session_state.chat_session = model.start_chat(history=[])
+        st.success("Chat history cleared")
 
     for message in st.session_state.chat_session.history:
         with st.chat_message(translate_role_for_streamlit(message.role)):
@@ -129,6 +63,7 @@ if selected == "ChatBot":
 
         with st.chat_message("assistant"):
             st.markdown(gemini_response.text)
+
 
 
 if selected == "file uploader":
@@ -177,7 +112,7 @@ if selected == "file uploader":
         st.write("Reply: ", response["output_text"])
     
     def main():
-        st.title("🤖 Gemini - ChatBot 🤖")
+        st.title("🤖 Gemini - File - ChatBot 🤖")
 
         pdf_docs = st.file_uploader("Upload your PDF files", accept_multiple_files=True)
 
@@ -189,9 +124,14 @@ if selected == "file uploader":
                     get_vector_store(text_chunks)
                     st.success("PDF Processing Complete")
 
-        user_question = st.text_input("Ask any question from the PDF Files")
+        user_question = st.chat_input("Ask any question from the PDF Files")
         if user_question:
             model = genai.GenerativeModel('gemini-pro')
             user_input(user_question, model)
+        
+
     if __name__ == "__main__":
         main()
+
+
+
