@@ -27,9 +27,10 @@ with open("design.css") as source_des:
 with st.sidebar: 
     selected = option_menu(menu_title="Gemini AI",
                            options=["ChatBot",
-                                    "file uploader"
+                                    "File Uploader",
+                                    "Embedded Text"
                                     ],
-                            menu_icon='robot', icons=['chat-dots-fill'],
+                            menu_icon='robot', icons=['chat-dots-fill', 'file-earmark-pdf-fill', 'pc-display-horizontal'],
                             default_index=0
                            )
 
@@ -65,8 +66,7 @@ if selected == "ChatBot":
             st.markdown(gemini_response.text)
 
 
-
-if selected == "file uploader":
+if selected == "File Uploader":
     def get_pdf_text(pdf_docs):
         text = ""
         for pdf in pdf_docs:
@@ -133,5 +133,25 @@ if selected == "file uploader":
     if __name__ == "__main__":
         main()
 
+if selected == "Embedded Text": 
+    st.title("#️⃣ Embed Text #️⃣")
 
+    def embeddings_model_response(input_text):
+        embedding_model = "models/embedding-001"
 
+        embedding = genai.embed_content(model=embedding_model,
+                                        content=input_text,
+                                        task_type="retrieval_document")
+        embedding_list = embedding["embedding"] 
+        return embedding_list 
+
+    
+    def main(): 
+        user_prompt = st.text_area(label='', placeholder="Enter the text to get embeddings")
+        
+        if st.button("Get Response"): 
+            response = embeddings_model_response(user_prompt) 
+            st.markdown(response)
+    
+    if __name__ == "__main__":
+        main()
