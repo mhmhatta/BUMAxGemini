@@ -2,10 +2,9 @@
 
 Welcome to the BUMAxGemini Chatbot repository! This project is a prototype chatbot application built using Gemini Pro 1.5 and Streamlit for the user interface.
 
-![image](https://github.com/mhmhatta/BUMAxGemini/assets/91374495/06506775-7c1c-4d9f-a8c1-d4b740b44842)
-![image](https://github.com/mhmhatta/BUMAxGemini/assets/91374495/fb229474-3d53-48dd-8cd9-59c6b86ed202)
-![image](https://github.com/mhmhatta/BUMAxGemini/assets/91374495/792d821e-ecdb-46aa-82ca-1baa953987ad)
-
+![image](https://github.com/mhmhatta/BUMAxGemini/assets/91374495/cafc8f22-b69b-478f-867d-92a4a58595cd)
+![image](https://github.com/mhmhatta/BUMAxGemini/assets/91374495/79f2d083-f8bc-4490-981f-21aa2d2b9fb3)
+![image](https://github.com/mhmhatta/BUMAxGemini/assets/91374495/a38b69ae-7d32-4547-9fe0-7940a996be72)
 
 
 ## Key Features
